@@ -55,3 +55,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+venv_bloodhound/
+.DS_Store
+*.sqlite3
+.env
