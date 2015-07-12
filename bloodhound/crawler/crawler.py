@@ -44,7 +44,7 @@ class Bloodhound(object):
         name = ''
 
         try:
-            price = html.split('<meta itemprop="price" content="')[1].partition('"')[0]
+            price = float(html.split('<meta itemprop="price" content="')[1].split('"')[0].partition(' ')[0].replace(',', '.'))
         except:
             pass
 
