@@ -36,14 +36,17 @@ class Bloodhound(object):
             tags = html.split('>')
 
             for tag in tags:
-                if ' href="http://www.verkkokauppa.com/fi/' in tag:
-                    splited_tag = tag.split(' href="')
-                    link = splited_tag[1].partition('"')[0]
-                    CrawlFrontier.objects.get_or_create(sniff_session=self.uuid, url=link)
-                if ' href="http://www.verkkokauppa.com/fi/product/' in tag:
-                    splited_tag = tag.split(' href="http://www.verkkokauppa.com/fi/product/')
-                    product_code = splited_tag[1].partition("/")[0].partition("?")[0].partition("#")[0]
-                    Product.objects.get_or_create(code=product_code)
+                try:
+                    if ' href="http://www.verkkokauppa.com/fi/' in tag:
+                        splited_tag = tag.split(' href="')
+                        link = splited_tag[1].partition('"')[0]
+                        CrawlFrontier.objects.get_or_create(sniff_session=self.uuid, url=link)
+                    if ' href="http://www.verkkokauppa.com/fi/product/' in tag:
+                        splited_tag = tag.split(' href="http://www.verkkokauppa.com/fi/product/')
+                        product_code = splited_tag[1].partition("/")[0].partition("?")[0].partition("#")[0]
+                        Product.objects.get_or_create(code=product_code)
+                except:
+                    pass
 
             self.sniff()
 

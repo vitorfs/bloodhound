@@ -23,10 +23,10 @@ class Sniff(threading.Thread):
         self.crawler.feed('http://www.verkkokauppa.com/')
 
     def run(self):
-        products = Product.objects.all().order_by('-visited_at')
-        for product in products:
-            self.crawler.howl(product.code)
-
+        while True:
+            products = Product.objects.all().order_by('visited_at')
+            for product in products:
+                self.crawler.howl(product.code)
 
 def main():
     crawling = Sniff()
