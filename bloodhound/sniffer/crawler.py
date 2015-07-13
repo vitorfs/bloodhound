@@ -23,38 +23,35 @@ class Bloodhound(object):
             frontier = CrawlFrontier(sniff_session=self.uuid, url=url)
             frontier.save()
         return frontier
-    
+
+    def crawl(self, frontier):
+        r = requests.get(frontier.url, headers=self.headers)
+        frontier.is_visited = True
+        frontier.visited_at = timezone.now()
+        frontier.status_code = r.status_code
+        frontier.save()
+
+        html = r.text
+        tags = html.split('>')
+
+        for tag in tags:
+            try:
+                if ' href="http://www.verkkokauppa.com/fi/' in tag:
+                    splited_tag = tag.split(' href="')
+                    link = splited_tag[1].partition('"')[0]
+                    CrawlFrontier.objects.get_or_create(sniff_session=self.uuid, url=link)
+                if ' href="http://www.verkkokauppa.com/fi/product/' in tag:
+                    splited_tag = tag.split(' href="http://www.verkkokauppa.com/fi/product/')
+                    product_code = splited_tag[1].partition("/")[0].partition("?")[0].partition("#")[0]
+                    Product.objects.get_or_create(code=product_code)
+            except:
+                pass
+
     def sniff(self):
-        try:
+        frontier = CrawlFrontier.objects.filter(sniff_session=self.uuid, is_visited=False).order_by('created_at')
+        while frontier.exists():
             frontier = CrawlFrontier.objects.filter(sniff_session=self.uuid, is_visited=False).order_by('created_at')
-
-            if frontier.exists():
-                crawl = frontier[0]
-                r = requests.get(crawl.url, headers=self.headers)
-                crawl.is_visited = True
-                crawl.visited_at = timezone.now()
-                crawl.status_code = r.status_code
-                crawl.save()
-
-                html = r.text
-                tags = html.split('>')
-
-                for tag in tags:
-                    try:
-                        if ' href="http://www.verkkokauppa.com/fi/' in tag:
-                            splited_tag = tag.split(' href="')
-                            link = splited_tag[1].partition('"')[0]
-                            CrawlFrontier.objects.get_or_create(sniff_session=self.uuid, url=link)
-                        if ' href="http://www.verkkokauppa.com/fi/product/' in tag:
-                            splited_tag = tag.split(' href="http://www.verkkokauppa.com/fi/product/')
-                            product_code = splited_tag[1].partition("/")[0].partition("?")[0].partition("#")[0]
-                            Product.objects.get_or_create(code=product_code)
-                    except Exception, e:
-                        write_log(e.message)
-
-                self.sniff()
-        except Exception, e:
-            write_log(e.message)
+            self.crawl(frontier[0])
 
     def howl(self, product_code):
         default_product_url = u'{0}product/{1}'.format(self.url, product_code)
