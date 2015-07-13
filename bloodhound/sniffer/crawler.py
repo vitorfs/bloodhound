@@ -43,7 +43,7 @@ class Bloodhound(object):
                 if ' href="http://www.verkkokauppa.com/fi/product/' in tag:
                     splited_tag = tag.split(' href="http://www.verkkokauppa.com/fi/product/')
                     product_code = splited_tag[1].partition("/")[0].partition("?")[0].partition("#")[0]
-                    Product.objects.get_or_create(code=product_code)
+                    self.howl(product_code)
             except:
                 pass
 
