@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Product(models.Model):
     NEW = u'NEW'
     OK = u'OK'
@@ -13,12 +14,13 @@ class Product(models.Model):
         (NOT_FOUND, u'Not found'),
         )
 
-    name = models.CharField(max_length=255)
-    code = models.CharField(max_length=255)
-    status = models.CharField(max_length=10, default=NEW, choices=PRODUCT_STATUS)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    code = models.CharField(max_length=255, unique=True)
+    url = models.URLField(max_length=1000, null=True, blank=True)
+    status = models.CharField(max_length=10, choices=PRODUCT_STATUS, default=NEW)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    visited_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    visited_at = models.DateTimeField(auto_now=True)
 
     current_price = models.FloatField(null=True)
     last_price = models.FloatField(null=True)
@@ -26,7 +28,16 @@ class Product(models.Model):
     price_percentage_variance = models.FloatField(default=0.0)
     price_changes = models.IntegerField(default=0)
 
+    def update_price(self, price):
+        if price != self.current_price:
+            self.last_price = self.current_price
+            self.current_price = price
+            self.price_changes = self.price_history.count()
+            self.status = self.OK
+            self.save()
+            PriceHistory(product=self, price=price).save()
+
 class PriceHistory(models.Model):
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, related_name='price_history')
     price = models.FloatField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
