@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load humanize %}
+
 {% block content %}
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -26,19 +28,28 @@
           </button>
         {% endif %}
       </div>
+
+      <div class="btn-group pull-right">
+        <a href="javascript:void(0);" class="btn btn-sm btn-link js-jump-page" data-container="body" data-placement="bottom">
+          <strong>{{ page_obj.start_index }}</strong> – <strong>{{ page_obj.end_index }}</strong> of <strong>{{ page_obj.paginator.count }}</strong>
+        </a>
+      </div>
+
     </div>
-    <table class="table">
+    <table class="table" id="products" data-num-pages="{{ page_obj.paginator.num_pages }}">
       <thead>
         <tr>
           <th>Name</th>
-          <th>Price</th>
+          <th class="text-center"><span class="glyphicon glyphicon-time"></span></th>
+          <th class="text-center"><span class="glyphicon glyphicon-euro"></span></th>
         </tr>
       </thead>
       <tbody>
         {% for product in object_list %}
           <tr>
             <td>{{ product.name }}</td>
-            <td class="text-right">{{ product.get_current_price_display }}</td>
+            <td class="text-right" style="white-space: nowrap;">{{ product.visited_at|naturaltime }}</td>
+            <td class="text-right" style="white-space: nowrap;">{{ product.get_current_price_display }}</td>
           </tr>
         {% endfor %}
       </tbody>
