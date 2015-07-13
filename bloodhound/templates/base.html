@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Bloodhound{% endblock %}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{% static 'css/bloodhound.css' %}" rel="stylesheet">
     {% block stylesheet %}{% endblock %}
     <!--[if lt IE 9]>
@@ -15,7 +16,29 @@
   </head>
 <body>
   <div class="container">
-    {% block content %}{% endblock %}
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="row">
+        <div class="col-xs-6">
+          <h1><i class="fa fa-user-secret"></i> Bloodhound</h1>
+        </div>
+        <div class="col-xs-6">
+          <form method="get" class="search">
+            <div class="input-group input-group">
+              <input type="text" class="form-control" name="q" value="{% if querystring %}{{ querystring }}{% endif %}" placeholder="Search">
+              <span class="input-group-btn">
+                {% if querystring %}
+                  <a href="/" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></a>
+                {% endif %}
+                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+      {% block content %}{% endblock %}
+    </div>
+  </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

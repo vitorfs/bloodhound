@@ -1,5 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Bloodhound</h1>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Verkkokauppa.com</h3>
+    </div>
+    <div class="panel-body">
+      <div class="btn-group pull-right" role="group" aria-label="Pager">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+          </a>
+        {% else %}
+          <button type="button" class="btn btn-default btn-sm" disabled>
+            <span class="glyphicon glyphicon-arrow-left"></span>
+          </button>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-arrow-right"></span>
+          </a>
+        {% else %}
+          <button type="button" class="btn btn-default btn-sm" disabled>
+            <span class="glyphicon glyphicon-arrow-right"></span>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in object_list %}
+          <tr>
+            <td>{{ product.name }}</td>
+            <td class="text-right">{{ product.get_current_price_display }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>  
 {% endblock %}

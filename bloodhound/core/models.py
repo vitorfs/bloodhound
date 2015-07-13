@@ -1,5 +1,15 @@
+# coding: utf-8
+
 from django.db import models
 
+def format_price(price):
+    formatted_price = u''
+    if price:
+        try:
+            formatted_price = u'{:.2f} €'.format(price)
+        except:
+            pass
+    return formatted_price
 
 class Product(models.Model):
     NEW = u'NEW'
@@ -36,6 +46,9 @@ class Product(models.Model):
             self.status = self.OK
             self.save()
             PriceHistory(product=self, price=price).save()
+
+    def get_current_price_display(self):
+        return format_price(self.current_price)
 
 class PriceHistory(models.Model):
     product = models.ForeignKey(Product, related_name='price_history')
