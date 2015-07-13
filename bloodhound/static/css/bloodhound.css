@@ -1,5 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700);
 
+body {
+  background-color: #f6f6f6;
+}
+
 h1 {
   font-family: 'Yanone Kaffeesatz', sans-serif;
 }
