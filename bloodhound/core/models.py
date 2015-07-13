@@ -50,6 +50,11 @@ class Product(models.Model):
     def get_current_price_display(self):
         return format_price(self.current_price)
 
+    def get_url(self):
+        if not self.url:
+            self.url = u'http://www.verkkokauppa.com/fi/product/{1}'.format(self.code)
+        return self.url
+
 class PriceHistory(models.Model):
     product = models.ForeignKey(Product, related_name='price_history')
     price = models.FloatField(null=True)

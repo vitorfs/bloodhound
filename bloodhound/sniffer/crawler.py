@@ -43,23 +43,22 @@ class Bloodhound(object):
                 if ' href="http://www.verkkokauppa.com/fi/product/' in tag:
                     splited_tag = tag.split(' href="http://www.verkkokauppa.com/fi/product/')
                     product_code = splited_tag[1].partition("/")[0].partition("?")[0].partition("#")[0]
-                    self.howl(product_code)
+                    product, created = Product.objects.get_or_create(code=product_code)
+                    if created:
+                        self.howl(product_code)
             except:
                 pass
 
     def sniff(self):
-        frontier = CrawlFrontier.objects.filter(sniff_session=self.uuid, is_visited=False).order_by('created_at')
-        while frontier.exists():
-            frontier = CrawlFrontier.objects.filter(sniff_session=self.uuid, is_visited=False).order_by('created_at')
-            self.crawl(frontier[0])
+        while True:
+            try:
+                frontier = CrawlFrontier.objects.filter(sniff_session=self.uuid, is_visited=False).order_by('created_at')[0]
+                self.crawl(frontier)
+            except:
+                break
 
-    def howl(self, product_code):
-        default_product_url = u'{0}product/{1}'.format(self.url, product_code)
-        product, created = Product.objects.get_or_create(code=product_code, defaults={ 'url': default_product_url })
-        if not product.url:
-            product.url = default_product_url
-        r = requests.get(product.url, headers=self.headers)
-
+    def howl(self, product):
+        r = requests.get(product.get_url(), headers=self.headers)
         if r.status_code == 200:
             try:
                 html = r.text
@@ -68,10 +67,8 @@ class Bloodhound(object):
                 product.update_price(price)
                 product.url = r.url
                 product.status = Product.OK
-            except Exception, e:
-                print e.message
+            except:
                 product.status = Product.ERROR
         else:
             product.status = Product.ERROR
-
         product.save()

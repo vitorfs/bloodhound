@@ -25,7 +25,7 @@ class Howl(threading.Thread):
         while True:
             products = Product.objects.filter(status=Product.OK).order_by('visited_at')
             for product in products:
-                self.crawler.howl(product.code)
+                self.crawler.howl(product)
 
 def main():
     crawling = Howl()
