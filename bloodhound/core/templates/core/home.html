@@ -9,8 +9,8 @@
     </div>
     <div class="panel-body">
       <div class="btn-group pull-right" role="group" aria-label="Pager">
-        {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default btn-sm">
+        {% if products.has_previous %}
+          <a href="?page={{ products.previous_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-arrow-left"></span>
           </a>
         {% else %}
@@ -18,8 +18,8 @@
             <span class="glyphicon glyphicon-arrow-left"></span>
           </button>
         {% endif %}
-        {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default btn-sm">
+        {% if products.has_next %}
+          <a href="?page={{ products.next_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-arrow-right"></span>
           </a>
         {% else %}
@@ -31,12 +31,28 @@
 
       <div class="btn-group pull-right">
         <a href="javascript:void(0);" class="btn btn-sm btn-link js-jump-page" data-container="body" data-placement="bottom">
-          <strong>{{ page_obj.start_index }}</strong> – <strong>{{ page_obj.end_index }}</strong> of <strong>{{ page_obj.paginator.count }}</strong>
+          <strong>{{ products.start_index }}</strong> – <strong>{{ products.end_index }}</strong> of <strong>{{ products.paginator.count }}</strong>
         </a>
       </div>
 
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon glyphicon-sort-by-attributes"></span>
+          Sort
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li{% if order == 'name' %} class="active"{% endif %}><a href="?o=name{% if querystring %}&q={{ querystring }}{% endif %}">Name (a - z)</a></li>
+          <li{% if order == '-name' %} class="active"{% endif %}><a href="?o=-name{% if querystring %}&q={{ querystring }}{% endif %}">Name (z - a)</a></li>
+          <li{% if order == 'current_price' %} class="active"{% endif %}><a href="?o=current_price{% if querystring %}&q={{ querystring }}{% endif %}">Lowest prices</a></li>
+          <li{% if order == '-current_price' %} class="active"{% endif %}><a href="?o=-current_price{% if querystring %}&q={{ querystring }}{% endif %}">Higher prices</a></li>
+          <li{% if order == '-price_changes' %} class="active"{% endif %}><a href="?o=-price_changes{% if querystring %}&q={{ querystring }}{% endif %}">Most variances</a></li>
+          <li{% if order == '-visited_at' %} class="active"{% endif %}><a href="?o=-visited_at{% if querystring %}&q={{ querystring }}{% endif %}">Recently visited</a></li>
+        </ul>
+      </div>
+
     </div>
-    <table class="table" id="products" data-num-pages="{{ page_obj.paginator.num_pages }}">
+    <table class="table" id="products" data-num-pages="{{ products.paginator.num_pages }}">
       <thead>
         <tr>
           <th>Name</th>
@@ -46,12 +62,22 @@
         </tr>
       </thead>
       <tbody>
-        {% for product in object_list %}
+        {% for product in products %}
           <tr>
             <td><a href="{{ product.url }}" target="_blank">{{ product.name }} <small><span class="glyphicon glyphicon-new-window"></span></small></a></td>
             <td class="text-right">{{ product.price_changes }}</td>
             <td class="text-right" style="white-space: nowrap;">{{ product.visited_at|naturaltime }}</td>
             <td class="text-right" style="white-space: nowrap;">{{ product.get_current_price_display }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" class="empty-result">
+              {% if querystring %}
+                <span class="glyphicon glyphicon-search"></span>
+                <h4>The search returned no result.</h4>
+                <a href="." class="btn btn-default">Clear search</a>
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </tbody>
