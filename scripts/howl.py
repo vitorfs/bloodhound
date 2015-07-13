@@ -15,21 +15,20 @@ from bloodhound.core.models import Product
 from bloodhound.sniffer.crawler import Bloodhound
 
 
-class Sniff(threading.Thread):
+class Howl(threading.Thread):
 
     def __init__(self):
-        super(Sniff, self).__init__()
+        super(Howl, self).__init__()
         self.crawler = Bloodhound()
-        self.crawler.feed('http://www.verkkokauppa.com/')
 
     def run(self):
         while True:
-            products = Product.objects.all().order_by('visited_at')
+            products = Product.objects.filter(status=Product.NEW).order_by('visited_at')
             for product in products:
                 self.crawler.howl(product.code)
 
 def main():
-    crawling = Sniff()
+    crawling = Howl()
     crawling.start()
 
 if __name__ == '__main__':
