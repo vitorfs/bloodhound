@@ -52,7 +52,7 @@ class Product(models.Model):
 
     def get_url(self):
         if not self.url:
-            self.url = u'http://www.verkkokauppa.com/fi/product/{1}'.format(self.code)
+            self.url = u'http://www.verkkokauppa.com/fi/product/{0}'.format(self.code)
         return self.url
 
 class PriceHistory(models.Model):
