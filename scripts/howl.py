@@ -23,7 +23,7 @@ class Howl(threading.Thread):
 
     def run(self):
         while True:
-            products = Product.objects.filter(status=Product.OK).order_by('visited_at')
+            products = Product.objects.all().order_by('visited_at')
             for product in products:
                 self.crawler.howl(product)
 
