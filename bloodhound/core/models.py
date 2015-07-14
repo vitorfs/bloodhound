@@ -42,15 +42,19 @@ class Product(models.Model):
         if price != self.current_price:
             self.last_price = self.current_price
             self.current_price = price
-            self.price_raw_variance = self.current_price - self.last_price
-            if self.current_price > 0 and self.last_price > 0:
-                if self.last_price < self.current_price:
-                    self.price_percentage_variance = self.last_price / self.current_price
-                    self.price_percentage_variance = 1.0 - self.price_percentage_variance
-                elif self.last_price > self.current_price:
-                    self.price_percentage_variance = self.current_price / self.last_price
-                    self.price_percentage_variance = self.price_percentage_variance - 1.0
+            if self.current_price and self.last_price:
+                self.price_raw_variance = self.current_price - self.last_price
+                if self.current_price > 0 and self.last_price > 0:
+                    if self.last_price < self.current_price:
+                        self.price_percentage_variance = self.last_price / self.current_price
+                        self.price_percentage_variance = 1.0 - self.price_percentage_variance
+                    elif self.last_price > self.current_price:
+                        self.price_percentage_variance = self.current_price / self.last_price
+                        self.price_percentage_variance = self.price_percentage_variance - 1.0
+                else:
+                    self.price_percentage_variance = 0.0
             else:
+                self.price_raw_variance = None
                 self.price_percentage_variance = 0.0
             self.price_changes = self.price_history.count()
             self.status = self.OK

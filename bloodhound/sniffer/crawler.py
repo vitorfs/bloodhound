@@ -64,9 +64,10 @@ class Bloodhound(object):
                 html = r.text
                 product.name = html.split('class="product-name"')[1].split(">")[1].partition('<')[0]
                 price = float(html.split('<meta itemprop="price" content="')[1].split('"')[0].partition(' ')[0].replace(',', '.'))
-                product.update_price(price)
+                if price:
+                    product.update_price(price)
+                    product.status = Product.OK
                 product.url = r.url
-                product.status = Product.OK
             except:
                 product.status = Product.ERROR
         else:
