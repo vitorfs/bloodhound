@@ -42,6 +42,16 @@ class Product(models.Model):
         if price != self.current_price:
             self.last_price = self.current_price
             self.current_price = price
+            self.price_raw_variance = self.current_price - self.last_price
+            if self.current_price > 0 and self.last_price > 0:
+                if self.last_price < self.current_price:
+                    self.price_percentage_variance = self.last_price / self.current_price
+                    self.price_percentage_variance = 1.0 - self.price_percentage_variance
+                elif self.last_price > self.current_price:
+                    self.price_percentage_variance = self.current_price / self.last_price
+                    self.price_percentage_variance = self.price_percentage_variance - 1.0
+            else:
+                self.price_percentage_variance = 0.0
             self.price_changes = self.price_history.count()
             self.status = self.OK
             self.save()
@@ -49,6 +59,10 @@ class Product(models.Model):
 
     def get_current_price_display(self):
         return format_price(self.current_price)
+
+    def get_price_percentage_variance_display(self):
+        value = self.price_percentage_variance * 100
+        return u'{:.2f}%'.format(value)
 
     def get_url(self):
         if not self.url:

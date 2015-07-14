@@ -1,16 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700);
 
-body {
-  background-color: #fafafa;
-}
-
 h1 {
   font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
 h1 a, h1 a:hover, h1 a:active {
   text-decoration: none;
-  color: #a94442;
+  color: #333;
 }
 
 .search {
