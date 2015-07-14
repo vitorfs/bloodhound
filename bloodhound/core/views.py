@@ -15,7 +15,7 @@ def home(request):
 
     default_order = 'price_percentage_variance'
     order = request.GET.get('o', default_order)
-    if order not in ['name', '-name', 'current_price', '-current_price', '-price_changes', 'price_percentage_variance', '-price_percentage_variance']:
+    if order not in ['name', '-name', 'current_price', '-current_price', '-price_changes', 'price_percentage_variance', '-price_percentage_variance', '-visited_at']:
         order = default_order
     queryset = queryset.order_by(order)
 
