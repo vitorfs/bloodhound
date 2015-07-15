@@ -68,8 +68,16 @@ class Product(models.Model):
     def get_current_price_display(self):
         return format_price(self.current_price)
 
+    def get_price_raw_variance_display(self):
+        value = self.price_raw_variance
+        if value < 0:
+            value = value * -1        
+        return format_price(value)
+
     def get_price_percentage_variance_display(self):
         value = self.price_percentage_variance * 100
+        if value < 0:
+            value = value * -1
         return u'{:.2f}%'.format(value)
 
     def get_url(self):

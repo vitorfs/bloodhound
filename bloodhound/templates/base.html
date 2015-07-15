@@ -16,24 +16,22 @@
   </head>
 <body>
   <div class="container">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <ul class="menu">
-        <li><a href="{% url 'home' %}"><span class="fa fa-home"></span> Home</a></li>
-        <li><a href="{% url 'hot' %}"><span class="fa fa-fire"></span> Hot</a></li>
-      </ul>
-      <h1><a href="{% url 'home' %}">Bloodhound</a></h1>
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-dismissible {% if message.tags %}{% if message.tags == 'error' %}alert-danger{% elif message.tags == 'debug' %}alert-warning{% else %}alert-{{ message.tags }}{% endif %}{% else %}alert-info{% endif %}" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-      {% block content %}{% endblock %}
-    </div>
-  </div>
+    <ul class="menu">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'hot' %}">Hot</a></li>
+      <li><a href="{% url 'hot' %}">Firefox Add-on</a></li>
+      <li><a href="{% url 'hot' %}">Chrome Plugin</a></li>
+    </ul>
+    <h1><a href="{% url 'home' %}">Bloodhound</a></h1>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-dismissible {% if message.tags %}{% if message.tags == 'error' %}alert-danger{% elif message.tags == 'debug' %}alert-warning{% else %}alert-{{ message.tags }}{% endif %}{% else %}alert-info{% endif %}" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

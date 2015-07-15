@@ -86,7 +86,7 @@
       </thead>
       <tbody>
         {% for product in products %}
-          <tr class="{% if product.price_percentage_variance < 0 %}bg-success{% elif product.price_percentage_variance > 0 %}bg-danger{% endif %}">
+          <tr>
             <td>
               <a href="{% url 'product' product.code %}">{{ product.name }}</a>
             </td>
@@ -94,9 +94,23 @@
               <a href="{{ product.url }}" target="_blank">{{ product.code }} <span class="glyphicon glyphicon-new-window" style="font-size: 60%;"></span></a>
             </td>
             <td class="text-right" style="white-space: nowrap;">{{ product.get_current_price_display }}</td>
-            <td>{{ product.get_price_percentage_variance_display }}</td>
+            <td style="white-space: nowrap;">
+              {% if product.price_percentage_variance < 0.0 %}
+                <span class="text-success">
+                  <span class="glyphicon glyphicon-arrow-down" style="font-size: 75%;"></span>
+                  <strong>{{ product.get_price_raw_variance_display }} <small>({{ product.get_price_percentage_variance_display }})</small></strong>
+                </span>
+              {% elif product.price_percentage_variance > 0.0 %}
+                <span class="text-danger">
+                  <span class="glyphicon glyphicon-arrow-up" style="font-size: 75%;"></span>
+                  <strong>{{ product.get_price_raw_variance_display }} <small>({{ product.get_price_percentage_variance_display }})</small></strong>
+                </span>
+              {% endif %}
+            </td>
             <td class="text-right" style="white-space: nowrap;">{{ product.price_changes }}</td>
-            <td class="text-right" style="white-space: nowrap;">{{ product.visited_at|naturaltime }}</td>
+            <td class="text-right" style="white-space: nowrap;">
+              <small>{{ product.visited_at|naturaltime }}</small>
+            </td>
           </tr>
         {% empty %}
           <tr>
