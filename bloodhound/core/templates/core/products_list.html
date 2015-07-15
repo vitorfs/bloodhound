@@ -77,11 +77,11 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Code</th>
-          <th>Variance</th>
+          <th class="text-center">Code</th>
+          <th class="text-center"><span class="glyphicon glyphicon-euro"></span></th>
+          <th class="text-center">Variance</th>
           <th class="text-center"><span class="fa fa-line-chart"></span></th>
           <th class="text-center"><span class="glyphicon glyphicon-time"></span></th>
-          <th class="text-center"><span class="glyphicon glyphicon-euro"></span></th>
         </tr>
       </thead>
       <tbody>
@@ -93,10 +93,10 @@
             <td class="text-right" style="white-space: nowrap;">
               <a href="{{ product.url }}" target="_blank">{{ product.code }} <span class="glyphicon glyphicon-new-window" style="font-size: 60%;"></span></a>
             </td>
+            <td class="text-right" style="white-space: nowrap;">{{ product.get_current_price_display }}</td>
             <td>{{ product.get_price_percentage_variance_display }}</td>
             <td class="text-right" style="white-space: nowrap;">{{ product.price_changes }}</td>
             <td class="text-right" style="white-space: nowrap;">{{ product.visited_at|naturaltime }}</td>
-            <td class="text-right" style="white-space: nowrap;">{{ product.get_current_price_display }}</td>
           </tr>
         {% empty %}
           <tr>
