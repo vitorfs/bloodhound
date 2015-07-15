@@ -68,5 +68,5 @@ def product_refresh(request, code):
 def hot(request):
     today = datetime.datetime.today()
     today = datetime.datetime(today.year, today.month, today.day)
-    products = Product.objects.filter(updated_at__gt=today).exclude(Q(current_price__isnull=True) | Q(current_price=0.0)).order_by('price_percentage_variance')[:10]
+    products = Product.objects.filter(status=Product.OK, updated_at__gt=today).exclude(price_percentage_variance__gt=0.0).order_by('price_percentage_variance')[:20]
     return render(request, 'core/hot.html', { 'products': products })
