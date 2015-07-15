@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load humanize %}
-
 {% block content %}
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -73,57 +71,20 @@
       </div>
 
     </div>
-    <table class="table" id="products" data-num-pages="{{ products.paginator.num_pages }}">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th class="text-center">Code</th>
-          <th class="text-center"><span class="glyphicon glyphicon-euro"></span></th>
-          <th class="text-center">Variance</th>
-          <th class="text-center"><span class="fa fa-line-chart"></span></th>
-          <th class="text-center"><span class="glyphicon glyphicon-time"></span></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in products %}
-          <tr>
-            <td>
-              <a href="{% url 'product' product.code %}">{{ product.name }}</a>
-            </td>
-            <td class="text-right" style="white-space: nowrap;">
-              <a href="{{ product.url }}" target="_blank">{{ product.code }} <span class="glyphicon glyphicon-new-window" style="font-size: 60%;"></span></a>
-            </td>
-            <td class="text-right" style="white-space: nowrap;">{{ product.get_current_price_display }}</td>
-            <td style="white-space: nowrap;">
-              {% if product.price_percentage_variance < 0.0 %}
-                <span class="text-success">
-                  <span class="glyphicon glyphicon-arrow-down" style="font-size: 75%;"></span>
-                  <strong>{{ product.get_price_raw_variance_display }} <small>({{ product.get_price_percentage_variance_display }})</small></strong>
-                </span>
-              {% elif product.price_percentage_variance > 0.0 %}
-                <span class="text-danger">
-                  <span class="glyphicon glyphicon-arrow-up" style="font-size: 75%;"></span>
-                  <strong>{{ product.get_price_raw_variance_display }} <small>({{ product.get_price_percentage_variance_display }})</small></strong>
-                </span>
-              {% endif %}
-            </td>
-            <td class="text-right" style="white-space: nowrap;">{{ product.price_changes }}</td>
-            <td class="text-right" style="white-space: nowrap;">
-              <small>{{ product.visited_at|naturaltime }}</small>
-            </td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="6" class="empty-result">
-              {% if querystring %}
-                <span class="glyphicon glyphicon-search"></span>
-                <h4>The search returned no result.</h4>
-                <a href="." class="btn btn-default">Clear search</a>
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+
+    {% if products %}
+      {% include 'core/partial_products_table.html' with products=products %}
+    {% else %}
+      <ul class="list-group">
+        {% if querystring %}
+          <li class="list-group-item empty-result">
+            <span class="glyphicon glyphicon-search"></span>
+            <h4>The search returned no result.</h4>
+            <a href="." class="btn btn-default">Clear search</a>
+          </li>
+        {% endif %}
+      </ul>
+    {% endif %}
+    
   </div>  
 {% endblock %}

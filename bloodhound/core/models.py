@@ -4,11 +4,11 @@ from django.db import models
 from django.utils import timezone
 
 
-def format_price(price):
+def format_currency(price):
     formatted_price = u''
     if price:
         try:
-            formatted_price = u'{:.2f} €'.format(price)
+            formatted_price = u'{:,.2f} €'.format(price).replace(',', ' ').replace('.', ',')
         except:
             pass
     return formatted_price
@@ -67,13 +67,13 @@ class Product(models.Model):
             PriceHistory(product=self, price=price).save()
 
     def get_current_price_display(self):
-        return format_price(self.current_price)
+        return format_currency(self.current_price)
 
     def get_price_raw_variance_display(self):
         value = self.price_raw_variance
         if value < 0:
             value = value * -1        
-        return format_price(value)
+        return format_currency(value)
 
     def get_price_percentage_variance_display(self):
         value = self.price_percentage_variance * 100
@@ -95,4 +95,4 @@ class PriceHistory(models.Model):
         ordering = ('-created_at',)
 
     def get_price_display(self):
-        return format_price(self.price)
+        return format_currency(self.price)
