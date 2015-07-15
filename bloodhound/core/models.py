@@ -1,6 +1,8 @@
 # coding: utf-8
 
 from django.db import models
+from django.utils import timezone
+
 
 def format_price(price):
     formatted_price = u''
@@ -10,6 +12,7 @@ def format_price(price):
         except:
             pass
     return formatted_price
+
 
 class Product(models.Model):
     NEW = u'NEW'
@@ -58,6 +61,7 @@ class Product(models.Model):
                 self.price_percentage_variance = 0.0
             self.price_changes = self.price_history.count()
             self.status = self.OK
+            self.updated_at = timezone.now()
             self.save()
             PriceHistory(product=self, price=price).save()
 
