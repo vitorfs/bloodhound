@@ -27,6 +27,12 @@
         last_page += "&q=" + querystring;
       }
 
+      var order = $("[name='o']").val();
+      if (order.length > 0) {
+        first_page += "&o=" + order;
+        last_page += "&o=" + order;
+      }
+
       var html = "<div><small><a href='" + first_page + "'>First page</a></small></div>";
       html += "<div><small><a href='" + last_page + "'>Last page</a></small></div>";
       return html;

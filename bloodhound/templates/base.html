@@ -24,6 +24,7 @@
         </div>
         <div class="col-xs-6">
           <form method="get" class="search">
+            <input type="hidden" name="o" value="{% if order %}{{ order }}{% endif %}">
             <div class="input-group input-group">
               <input type="text" class="form-control" name="q" value="{% if querystring %}{{ querystring }}{% endif %}" placeholder="Search">
               <span class="input-group-btn">
