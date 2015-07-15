@@ -2,8 +2,9 @@
 
 {% load humanize %}
 
-{% block content %}
+{% block title %}{{ product.name }}{% endblock %}
 
+{% block content %}
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
@@ -33,7 +34,6 @@
       <hr>
 
       <h4>Price History</h4>
-
       <table class="table">
         <thead>
           <tr>
@@ -54,5 +54,4 @@
       <a href="{% url 'products' %}"><span class="glyphicon glyphicon-arrow-left"></span> Return to catalog</a>
     </div>
   </div>
-
 {% endblock %}

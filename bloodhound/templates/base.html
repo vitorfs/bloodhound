@@ -18,6 +18,10 @@
   <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
+      <ul class="menu">
+        <li><a href="{% url 'home' %}"><span class="fa fa-home"></span> Home</a></li>
+        <li><a href="{% url 'hot' %}"><span class="fa fa-fire"></span> Hot</a></li>
+      </ul>
       <h1><a href="{% url 'home' %}">Bloodhound</a></h1>
       {% if messages %}
         {% for message in messages %}

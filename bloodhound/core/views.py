@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import datetime
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse as r
 from django.db.models import Q
@@ -62,3 +64,9 @@ def product_refresh(request, code):
     except Product.DoesNotExist:
         messages.error(request, u'Product with code {0} was not found.'.format(code))
         return redirect(r('home'))
+
+def hot(request):
+    today = datetime.datetime.today()
+    today = datetime.datetime(today.year, today.month, today.day)
+    products = Product.objects.filter(updated_at__gt=today).exclude(Q(current_price__isnull=True) | Q(current_price=0.0)).order_by('price_percentage_variance')[:10]
+    return render(request, 'core/hot.html', { 'products': products })

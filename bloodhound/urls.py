@@ -5,4 +5,5 @@ urlpatterns = [
     url(r'^products/$', 'bloodhound.core.views.products_list', name='products'),
     url(r'^products/(\d+)/$', 'bloodhound.core.views.product_details', name='product'),
     url(r'^products/(\d+)/refresh/$', 'bloodhound.core.views.product_refresh', name='refresh'),
+    url(r'^hot/$', 'bloodhound.core.views.hot', name='hot'),
 ]
