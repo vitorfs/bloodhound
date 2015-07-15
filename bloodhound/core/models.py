@@ -77,3 +77,9 @@ class PriceHistory(models.Model):
     product = models.ForeignKey(Product, related_name='price_history')
     price = models.FloatField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-created_at',)
+
+    def get_price_display(self):
+        return format_price(self.price)

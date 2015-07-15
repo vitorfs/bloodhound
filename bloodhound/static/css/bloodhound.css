@@ -9,10 +9,6 @@ h1 a, h1 a:hover, h1 a:active {
   color: #333;
 }
 
-.search {
-  margin-top: 20px;
-}
-
 #products tbody tr td.empty-result {
   background-color: #f5f5f5;
   padding-top: 40px;

@@ -1,17 +1,21 @@
 # coding: utf-8
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
+from django.core.urlresolvers import reverse as r
+from django.db.models import Q
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST
 
 from bloodhound.core.models import Product
+from bloodhound.sniffer.crawler import Bloodhound
 
 
-def home(request):
+def products_list(request):
     queryset = Product.objects.filter(status=Product.OK)
 
     querystring = request.GET.get('q')
     if querystring:
-        queryset = queryset.filter(name__icontains=querystring)
+        queryset = queryset.filter(Q(name__icontains=querystring) | Q(code__icontains=querystring))
 
     default_order = 'price_percentage_variance'
     order = request.GET.get('o', default_order)
@@ -28,8 +32,33 @@ def home(request):
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
 
-    return render(request, 'core/home.html', { 
+    return render(request, 'core/products_list.html', { 
             'products': products, 
             'order': order, 
             'querystring': querystring 
         })
+
+def product_details(request, code):
+    try:
+        product = Product.objects.get(code=code)
+    except Product.DoesNotExist:
+        crawler = Bloodhound()
+        product = Product(code=code)
+        product = crawler.howl(product)
+
+    if product.status == Product.OK:
+        return render(request, 'core/product_details.html', { 'product': product })
+    else:
+        messages.error(request, u'Product with code {0} was not found.'.format(code))
+        return redirect(r('home'))
+
+@require_POST
+def product_refresh(request, code):
+    try:
+        product = Product.objects.get(code=code)
+        crawler = Bloodhound()
+        crawler.howl(product)
+        return redirect(r('product', args=(code,)))
+    except Product.DoesNotExist:
+        messages.error(request, u'Product with code {0} was not found.'.format(code))
+        return redirect(r('home'))

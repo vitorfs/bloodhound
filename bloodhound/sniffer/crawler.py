@@ -73,3 +73,4 @@ class Bloodhound(object):
         else:
             product.status = Product.ERROR
         product.save()
+        return product

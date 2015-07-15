@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <a href="{% url 'home' %}">Verkkokauppa.com</a>
+        <span class="text-muted" style="font-weight: 300; margin: 0 .2em;">/</span>
+        {{ product.name }}
+      </h3>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt>Product Code</dt>
+        <dd>{{ product.code }}</dd>
+        <dt>Last update</dt>
+        <dd>
+          {{ product.visited_at|naturaltime }}
+          <form method="post" action="{% url 'refresh' product.code %}" style="display: inline-block;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-default btn-xs">
+              <span class="glyphicon glyphicon-refresh"></span> Refresh
+            </button>
+          </form>
+        </dd>
+        <dt>View at Verkkokauppa</dt>
+        <dd><a href="{{ product.get_url }}" target="_blank">{{ product.get_url }} <span class="glyphicon glyphicon-new-window" style="font-size: 60%;"></span></a></dd>
+      </dl>
+
+      <hr>
+
+      <h4>Price History</h4>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Price</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for price in product.price_history.all %}
+            <tr>
+              <td>{{ price.get_price_display }}</td>
+              <td>{{ price.created_at }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <a href="{% url 'products' %}"><span class="glyphicon glyphicon-arrow-left"></span> Return to catalog</a>
+    </div>
+  </div>
+
+{% endblock %}

@@ -18,25 +18,15 @@
   <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
-      <div class="row">
-        <div class="col-xs-6">
-          <h1><a href="{% url 'home' %}"><i class="fa fa-user-secret"></i> Bloodhound</a></h1>
-        </div>
-        <div class="col-xs-6">
-          <form method="get" class="search">
-            <input type="hidden" name="o" value="{% if order %}{{ order }}{% endif %}">
-            <div class="input-group input-group">
-              <input type="text" class="form-control" name="q" value="{% if querystring %}{{ querystring }}{% endif %}" placeholder="Search">
-              <span class="input-group-btn">
-                {% if querystring %}
-                  <a href="/" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></a>
-                {% endif %}
-                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-              </span>
-            </div>
-          </form>
-        </div>
-      </div>
+      <h1><a href="{% url 'home' %}">Bloodhound</a></h1>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-dismissible {% if message.tags %}{% if message.tags == 'error' %}alert-danger{% elif message.tags == 'debug' %}alert-warning{% else %}alert-{{ message.tags }}{% endif %}{% else %}alert-info{% endif %}" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
       {% block content %}{% endblock %}
     </div>
   </div>
