@@ -10,7 +10,7 @@ header {
 
 header h1 {
   font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 46px;
+  font-size: 52px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -27,6 +27,26 @@ header h1 a:active {
   margin-bottom: 20px;
 }
 
+.search .form-control {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.search .btn {
+  border-radius: 0;
+  border: none;
+  color: #E10803;
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
+.search .btn:hover,
+.search .btn:active {
+  background-color: #fff;
+  color: #b50500;
+}
+
 .search .form-control:focus {
   border-color: #B50500;
 }
@@ -38,7 +58,7 @@ header h1 a:active {
 
 .menu a {
   font-weight: bold;
-  padding: 8px 20px;
+  padding: 8px 16px;
   display: inline-block;
   color: #fff;
   -webkit-transition: all 0.2s ease 0s;
@@ -50,6 +70,7 @@ header h1 a:active {
 .menu a:hover,
 .menu a:active {
   background-color: #8C0400;
+  text-decoration: none;
 }
 
 .btn-toolbar {
