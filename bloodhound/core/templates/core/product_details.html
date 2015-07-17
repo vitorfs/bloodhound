@@ -12,7 +12,7 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Date', 'Price'],
-          {% for price in product.price_history.all %}
+          {% for price in price_history_chart %}
             ['{{ price.created_at }}',  {{ price.price }}]{% if not forloop.last %},{% endif %}
           {% endfor %}
         ]);

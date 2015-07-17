@@ -19,8 +19,10 @@
     <ul class="menu">
       <li><a href="{% url 'home' %}">Home</a></li>
       <li><a href="{% url 'hot' %}">Hot</a></li>
+      {% comment %}
       <li><a href="{% url 'hot' %}">Firefox Extension</a></li>
       <li><a href="{% url 'hot' %}">Chrome Extension</a></li>
+      {% endcomment %}
     </ul>
     <h1><a href="{% url 'home' %}">Bloodhound</a></h1>
     {% if messages %}

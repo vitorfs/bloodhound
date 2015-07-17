@@ -49,7 +49,11 @@ def product_details(request, code):
         product = crawler.howl(product)
 
     if product.status == Product.OK:
-        return render(request, 'core/product_details.html', { 'product': product })
+        price_history_chart = product.price_history.all().order_by('created_at')
+        return render(request, 'core/product_details.html', { 
+                'product': product,
+                'price_history_chart': price_history_chart
+            })
     else:
         messages.error(request, u'Product with code {0} was not found.'.format(code))
         return redirect(r('home'))
