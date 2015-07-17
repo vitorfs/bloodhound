@@ -1,14 +1,16 @@
+import logging
 import requests
 import uuid
 
 from django.utils import timezone
+from django.conf import settings
 
 from bloodhound.core.models import Product
 from bloodhound.sniffer.models import CrawlFrontier
 
-def write_log(message):
-    with open('/opt/bloodhound/logs/crawler.log', 'a') as f:
-        f.write(message)
+
+logging.basicConfig(filename=settings.PROJECT_DIR.parent.parent.child('logs').child('bloodhound_sniffer.log'), level=logging.ERROR)
+
 
 class Bloodhound(object):
     
@@ -62,15 +64,30 @@ class Bloodhound(object):
         if r.status_code == 200:
             try:
                 html = r.text
-                product.name = html.split('class="product-name"')[1].split(">")[1].partition('<')[0]
+                product.name = html.split('class="product-name"')[1].split('>')[1].partition('<')[0]
                 price = float(html.split('<meta itemprop="price" content="')[1].split('"')[0].partition(' ')[0].replace(',', '.'))
                 if price:
                     product.update_price(price)
                     product.status = Product.OK
+                else:
+                    logging.error(u'Could not parse price for product {0} at {1}'.format(product.code, product.get_url()))
+
+                try:
+                    product.manufacturer = html.split('itemtype="http://schema.org/Organization"')[1].split('<td itemprop="name"><strong>')[1].partition('</strong>')[0]
+                except:
+                    logging.error(u'Could not parse manufacturer for product {0} at {1}'.format(product.code, product.get_url()))
+
+                try:
+                    product.manufacturer_code = html.split('itemtype="http://schema.org/Organization"')[1].split('<td itemprop="model"><strong>')[1].partition('</strong>')[0]
+                except:
+                    logging.error(u'Could not parse manufacturer code for product {0} at {1}'.format(product.code, product.get_url()))
+
                 product.url = r.url
-            except:
+            except Exception, e:
                 product.status = Product.ERROR
+                logging.error(u'Could not parse product {0} at {1}. Exception {2}'.format(product.code, product.get_url(), e.message))
         else:
             product.status = Product.ERROR
+            logging.error(u'URL {0} returned status code {1}'.format(r.url, r.status_code))
         product.save()
         return product
