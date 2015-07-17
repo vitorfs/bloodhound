@@ -9,7 +9,7 @@ from bloodhound.core.models import Product
 from bloodhound.sniffer.models import CrawlFrontier
 
 
-logging.basicConfig(filename=settings.PROJECT_DIR.parent.parent.child('logs').child('bloodhound_sniffer.log'), level=logging.ERROR)
+#logging.basicConfig(filename=settings.PROJECT_DIR.parent.parent.child('logs').child('bloodhound_sniffer.log'), level=logging.ERROR)
 
 
 class Bloodhound(object):
