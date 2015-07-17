@@ -33,8 +33,8 @@
         last_page += "&o=" + order;
       }
 
-      var html = "<div><small><a href='" + first_page + "'>First page</a></small></div>";
-      html += "<div><small><a href='" + last_page + "'>Last page</a></small></div>";
+      var html = "<div><a href='" + first_page + "'>First page</a></div>";
+      html += "<div><a href='" + last_page + "'>Last page</a></div>";
       return html;
     }
   });

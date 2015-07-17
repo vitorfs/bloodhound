@@ -1,77 +1,56 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="panel panel-danger">
-    <div class="panel-heading">
-      <h3 class="panel-title">Verkkokauppa.com</h3>
-    </div>
-    <div class="panel-body">
-      <div class="btn-toolbar" role="toolbar" aria-label="Products Toolbar">
 
-        <form method="get">
-          <input type="hidden" name="o" value="{% if order %}{{ order }}{% endif %}">
-          <div class="input-group" style="width: 300px;">
-            <input type="text" class="form-control input-sm" name="q" value="{% if querystring %}{{ querystring }}{% endif %}" placeholder="Search">
-            <span class="input-group-btn">
-              <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-search"></span></button>
-            </span>
-          </div>
-        </form>
+  <div class="btn-toolbar" role="toolbar" aria-label="Products Toolbar">
 
-        {% if querystring %}
-          <div class="btn-group">
-            <a href="/" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-remove"></span> Clear search</a>
-          </div>
-        {% endif %}
-
-        <div class="btn-group pull-right" role="group" aria-label="Pager">
-          {% if products.has_previous %}
-            <a href="?page={{ products.previous_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-arrow-left"></span>
-            </a>
-          {% else %}
-            <button type="button" class="btn btn-default btn-sm" disabled>
-              <span class="glyphicon glyphicon-arrow-left"></span>
-            </button>
-          {% endif %}
-          {% if products.has_next %}
-            <a href="?page={{ products.next_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-arrow-right"></span>
-            </a>
-          {% else %}
-            <button type="button" class="btn btn-default btn-sm" disabled>
-              <span class="glyphicon glyphicon-arrow-right"></span>
-            </button>
-          {% endif %}
-        </div>
-
-        <div class="btn-group pull-right">
-          <a href="javascript:void(0);" class="btn btn-sm btn-link js-jump-page" data-container="body" data-placement="bottom">
-            <strong>{{ products.start_index }}</strong> – <strong>{{ products.end_index }}</strong> of <strong>{{ products.paginator.count }}</strong>
-          </a>
-        </div>
-
-        <div class="btn-group pull-right">
-          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="glyphicon glyphicon-sort-by-attributes"></span>
-            Sort
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li{% if order == 'name' %} class="active"{% endif %}><a href="?o=name{% if querystring %}&q={{ querystring }}{% endif %}">Name (a - z)</a></li>
-            <li{% if order == '-name' %} class="active"{% endif %}><a href="?o=-name{% if querystring %}&q={{ querystring }}{% endif %}">Name (z - a)</a></li>
-            <li{% if order == 'price_percentage_variance' %} class="active"{% endif %}><a href="?o=price_percentage_variance{% if querystring %}&q={{ querystring }}{% endif %}">Greater prices decreases</a></li>
-            <li{% if order == '-price_percentage_variance' %} class="active"{% endif %}><a href="?o=-price_percentage_variance{% if querystring %}&q={{ querystring }}{% endif %}">Greater prices increases</a></li>
-            <li{% if order == 'current_price' %} class="active"{% endif %}><a href="?o=current_price{% if querystring %}&q={{ querystring }}{% endif %}">Lowest prices</a></li>
-            <li{% if order == '-current_price' %} class="active"{% endif %}><a href="?o=-current_price{% if querystring %}&q={{ querystring }}{% endif %}">Highest prices</a></li>
-            <li{% if order == '-price_changes' %} class="active"{% endif %}><a href="?o=-price_changes{% if querystring %}&q={{ querystring }}{% endif %}">Most variances</a></li>
-            <li{% if order == '-visited_at' %} class="active"{% endif %}><a href="?o=-visited_at{% if querystring %}&q={{ querystring }}{% endif %}">Recently visited</a></li>
-          </ul>
-        </div>
-      </div>
-
+    <div class="btn-group pull-right" role="group" aria-label="Pager">
+      {% if products.has_previous %}
+        <a href="?page={{ products.previous_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default">
+          <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+      {% else %}
+        <button type="button" class="btn btn-default" disabled>
+          <span class="glyphicon glyphicon-arrow-left"></span>
+        </button>
+      {% endif %}
+      {% if products.has_next %}
+        <a href="?page={{ products.next_page_number }}{% if order %}&o={{ order }}{% endif %}{% if querystring %}&q={{ querystring }}{% endif %}" class="btn btn-default">
+          <span class="glyphicon glyphicon-arrow-right"></span>
+        </a>
+      {% else %}
+        <button type="button" class="btn btn-default" disabled>
+          <span class="glyphicon glyphicon-arrow-right"></span>
+        </button>
+      {% endif %}
     </div>
 
+    <div class="btn-group pull-right">
+      <a href="javascript:void(0);" class="btn btn-link js-jump-page" data-container="body" data-placement="bottom">
+        <strong>{{ products.start_index }}</strong> – <strong>{{ products.end_index }}</strong> of <strong>{{ products.paginator.count }}</strong>
+      </a>
+    </div>
+
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="glyphicon glyphicon-sort-by-attributes"></span>
+        Sort
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li{% if order == 'name' %} class="active"{% endif %}><a href="?o=name{% if querystring %}&q={{ querystring }}{% endif %}">Name (a - z)</a></li>
+        <li{% if order == '-name' %} class="active"{% endif %}><a href="?o=-name{% if querystring %}&q={{ querystring }}{% endif %}">Name (z - a)</a></li>
+        <li{% if order == 'price_percentage_variance' %} class="active"{% endif %}><a href="?o=price_percentage_variance{% if querystring %}&q={{ querystring }}{% endif %}">Greater prices decreases</a></li>
+        <li{% if order == '-price_percentage_variance' %} class="active"{% endif %}><a href="?o=-price_percentage_variance{% if querystring %}&q={{ querystring }}{% endif %}">Greater prices increases</a></li>
+        <li{% if order == 'current_price' %} class="active"{% endif %}><a href="?o=current_price{% if querystring %}&q={{ querystring }}{% endif %}">Lowest prices</a></li>
+        <li{% if order == '-current_price' %} class="active"{% endif %}><a href="?o=-current_price{% if querystring %}&q={{ querystring }}{% endif %}">Highest prices</a></li>
+        <li{% if order == '-price_changes' %} class="active"{% endif %}><a href="?o=-price_changes{% if querystring %}&q={{ querystring }}{% endif %}">Most variances</a></li>
+        <li{% if order == '-visited_at' %} class="active"{% endif %}><a href="?o=-visited_at{% if querystring %}&q={{ querystring }}{% endif %}">Recently visited</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
     {% if products %}
       {% include 'core/partial_products_table.html' with products=products %}
     {% else %}
@@ -85,6 +64,5 @@
         {% endif %}
       </ul>
     {% endif %}
-    
   </div>  
 {% endblock %}

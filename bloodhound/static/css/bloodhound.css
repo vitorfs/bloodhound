@@ -10,7 +10,7 @@ header {
 
 header h1 {
   font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 42px;
+  font-size: 46px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -22,8 +22,17 @@ header h1 a:active {
   color: #fff;
 }
 
+.search {
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+
+.search .form-control:focus {
+  border-color: #B50500;
+}
+
 .menu {
-  background-color: #A10301;
+  background-color: #B50500;
   margin-bottom: 30px;
 }
 
@@ -40,11 +49,11 @@ header h1 a:active {
 
 .menu a:hover,
 .menu a:active {
-  background-color: #7E0000;
+  background-color: #8C0400;
 }
 
-main .container {
-
+.btn-toolbar {
+  margin-bottom: 20px;
 }
 
 .empty-result {

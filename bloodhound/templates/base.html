@@ -18,13 +18,31 @@
 
   <header>
     <div class="container">
-      <h1><a href="{% url 'home' %}">Bloodhound</a></h1>
+      <div class="row">
+        <div class="col-sm-4">
+          <h1><a href="{% url 'home' %}">Bloodhound</a></h1>
+        </div>
+        <div class="col-sm-8">
+          <form method="get" action="{% url 'products' %}" class="search">
+            <input type="hidden" name="o" value="{% if order %}{{ order }}{% endif %}">
+            <div class="input-group">
+              <input type="text" class="form-control input-lg" name="q" value="{% if querystring %}{{ querystring }}{% endif %}" placeholder="Search by product name, code or manufacturer">
+              <span class="input-group-btn">
+                {% if querystring %}
+                  <a href="/" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-remove"></span></a>
+                {% endif %}
+                <button type="submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-search"></span> Search</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </header>
 
   <nav class="menu">
     <div class="container">
-      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'home' %}">Catalog</a>
       <a href="{% url 'hot' %}">What's Hot Today</a>
       {% comment %}
       <a href="{% url 'hot' %}">Firefox Extension</a>
