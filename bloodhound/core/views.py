@@ -34,10 +34,24 @@ def products_list(request):
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
 
+    sorting_labels = {
+        'name': 'Name (a - z)',
+        '-name': 'Name (z - a)',
+        'price_percentage_variance': 'Greater prices decreases',
+        '-price_percentage_variance': 'Greater prices increases',
+        'current_price': 'Lowest prices',
+        '-current_price': 'Highest prices',
+        '-price_changes': 'Most variances',
+        '-visited_at': 'Recently visited',
+    }
+
+    label_sort_by = sorting_labels[order]
+
     return render(request, 'core/products_list.html', { 
             'products': products, 
             'order': order, 
-            'querystring': querystring 
+            'querystring': querystring,
+            'label_sort_by': label_sort_by
         })
 
 def product_details(request, code):
