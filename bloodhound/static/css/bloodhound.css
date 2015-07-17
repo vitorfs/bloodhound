@@ -1,16 +1,53 @@
 @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700);
 
-h1 {
-  font-family: 'Yanone Kaffeesatz', sans-serif;
+body {
+  background-color: #f6f6f6;
 }
 
-h1 a, h1 a:hover, h1 a:active {
+header {
+  background-color: #E10803;
+}
+
+header h1 {
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 42px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+header h1 a,
+header h1 a:hover, 
+header h1 a:active {
   text-decoration: none;
-  color: #333;
+  color: #fff;
+}
+
+.menu {
+  background-color: #A10301;
+  margin-bottom: 30px;
+}
+
+.menu a {
+  font-weight: bold;
+  padding: 8px 20px;
+  display: inline-block;
+  color: #fff;
+  -webkit-transition: all 0.2s ease 0s;
+      -moz-transition: all 0.2s ease 0s;
+        -o-transition: all 0.2s ease 0s;
+           transition: all 0.2s ease 0s;
+}
+
+.menu a:hover,
+.menu a:active {
+  background-color: #7E0000;
+}
+
+main .container {
+
 }
 
 .empty-result {
-  background-color: #f5f5f5;
   padding-top: 40px;
   padding-bottom: 40px;
   text-align: center;
@@ -19,26 +56,4 @@ h1 a, h1 a:hover, h1 a:active {
 .empty-result > .glyphicon {
   color: #aaa;
   font-size: 28px;
-}
-
-.menu {
-  float: right;
-  margin-top: 40px;
-  list-style: none;
-}
-
-.menu li {
-  display: inline-block;
-}
-
-.menu li a {
-  font-size: 16px;
-  font-weight: 700;
-  text-transform: lowercase;
-}
-
-.menu > li + li:before {
-  padding: 0 5px;
-  color: #ccc;
-  content: "/\00a0";
 }
