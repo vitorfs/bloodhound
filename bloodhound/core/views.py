@@ -17,7 +17,7 @@ def products_list(request):
 
     querystring = request.GET.get('q')
     if querystring:
-        queryset = queryset.filter(Q(name__icontains=querystring) | Q(code__icontains=querystring))
+        queryset = queryset.filter(Q(name__icontains=querystring) | Q(code__icontains=querystring) | Q(manufacturer__icontains=querystring) | Q(manufacturer_code__icontains=querystring))
 
     default_order = 'price_percentage_variance'
     order = request.GET.get('o', default_order)
