@@ -43,10 +43,14 @@
       <dl class="dl-horizontal">
         <dt>Product Code</dt>
         <dd>{{ product.code }}</dd>
+        {% if product.manufacturer %}
         <dt>Manufacturer</dt>
         <dd>{{ product.manufacturer }}</dd>
+        {% endif %}
+        {% if product.manufacturer_code %}
         <dt>Manufacturer Code</dt>
         <dd>{{ product.manufacturer_code }}</dd>
+        {% endif %}
         <dt>Last update</dt>
         <dd>
           {{ product.visited_at|naturaltime }}
