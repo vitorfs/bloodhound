@@ -97,3 +97,7 @@ class PriceHistory(models.Model):
 
     def get_price_display(self):
         return format_currency(self.price)
+
+class Image(models.Model):
+    product = models.ForeignKey(Product)
+    url = models.URLField(max_length=1000)
