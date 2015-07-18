@@ -3,19 +3,14 @@
 {% block title %}What's Hot Today{% endblock %}
 
 {% block content %}
-  <div class="panel panel-danger">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        What's Hot Today
-      </h3>
-    </div>
-    
+  <h3 class="product-title">What's Hot Today</h3>
+  <div class="panel panel-default">
     {% if products %}
       {% include 'core/partial_products_table.html' with products=products %}
     {% else %}
       <ul class="list-group">
         <li class="list-group-item empty-result">
-          <span class="glyphicon glyphicon-thumbs-down"></span>
+          <span class="glyphicon glyphicon-fire"></span>
           <h4>No discount today.</h4>
         </li>
       </ul>

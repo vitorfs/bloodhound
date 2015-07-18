@@ -31,14 +31,8 @@
 {% endblock %}
 
 {% block content %}
-  <div class="panel panel-danger">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        <a href="{% url 'home' %}">Verkkokauppa.com</a>
-        <span class="text-muted" style="font-weight: 300; margin: 0 .2em;">/</span>
-        {{ product.name }}
-      </h3>
-    </div>
+  <h3 class="product-title">{{ product.name }}</h3>
+  <div class="panel panel-default">
     <div class="panel-body">
       <dl class="dl-horizontal">
         <dt>Product Code</dt>
