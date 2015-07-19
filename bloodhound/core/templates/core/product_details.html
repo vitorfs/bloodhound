@@ -86,7 +86,21 @@
         </div>
       </div>
 
-      <a href="{% url 'products' %}"><span class="glyphicon glyphicon-arrow-left"></span> Return to catalog</a>
+      <hr>
+
+      <h4>Pictures</h4>
+
+      <div class="row">
+        {% for image in product.images.all %}
+          <div class="col-xs-6 col-md-3">
+            <a href="{{ image.url }}" class="thumbnail" target="_blank">
+              <img src="{{ image.url }}" alt="{{ image.product.name }}">
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+      <a href="javascript:history.back();"><span class="glyphicon glyphicon-arrow-left"></span> Return to catalog</a>
     </div>
   </div>
 {% endblock %}

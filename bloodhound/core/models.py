@@ -99,5 +99,5 @@ class PriceHistory(models.Model):
         return format_currency(self.price)
 
 class Image(models.Model):
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, related_name='images')
     url = models.URLField(max_length=1000)
