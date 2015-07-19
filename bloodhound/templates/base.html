@@ -27,7 +27,12 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-4">
-          <h1><a href="{% url 'home' %}">Bloodhound</a></h1>
+          <h1>
+            <a href="{% url 'home' %}">
+              <img src="{% static 'img/logo.svg' %}" alt="Bloodhound" class="logo">
+              Bloodhound
+            </a>
+          </h1>
         </div>
         <div class="col-sm-8">
           <form method="get" action="{% url 'products' %}" class="search">

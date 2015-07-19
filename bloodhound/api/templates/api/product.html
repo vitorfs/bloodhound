@@ -1,1 +1,23 @@
-<h1>{{ product.name }}</h1>
+<strong>{{ product.name }}</strong>
+
+<ul>
+  <li>Lowest price: {{ lowest_price.price }}</li>
+  <li>Highest price: {{ highest_price.price }}</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Price</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for price in product.price_history.all %}
+      <tr>
+        <td class="text-right">{{ price.get_price_display }}</td>
+        <td>{{ price.created_at }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

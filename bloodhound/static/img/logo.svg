@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="320px" height="320px" viewBox="0 0 320 320" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Bloodhound Logo</title>
+  <g id="bloodhound-logo">
+    <path id="base" fill="#d1af67" d="M0,80 L0,160 L80,240 L160,240 L160,320 L240,320 L320,240 L320,0 L160,0 L80,80 L0,80 Z"></path>
+    <path id="mouth" fill="#8b572a" d="M0,80 L0,160 L80,240 L80,80 L0,80 Z"></path>
+    <path id="nose" fill="#000" d="M0,80 L0,160 L80,80 L0,80 Z"></path>
+    <path id="chin" fill="#c39e4f" d="M160,240 L80,240 L160,160 L160,240 Z"></path>
+    <path id="ear" fill="#8b572a" d="M240,320 L160,320 L160,160 L320,0 L320,240 L240,320 Z"></path>
+  </g>
+</svg>

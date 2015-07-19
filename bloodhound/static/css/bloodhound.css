@@ -22,6 +22,11 @@ header h1 a:active {
   color: #fff;
 }
 
+header .logo {
+  width: 45px;
+  margin-right: 5px;
+}
+
 .search {
   margin-top: 25px;
   margin-bottom: 20px;
