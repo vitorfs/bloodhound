@@ -20,6 +20,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
+    'bloodhound.api',
     'bloodhound.core',
     'bloodhound.sniffer',
 )
