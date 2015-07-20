@@ -5,11 +5,16 @@ from unipath import Path
 PROJECT_DIR = Path(__file__).parent
 
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
+SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=True, cast=bool)
+
+
 SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'bloodhound.me']
+ALLOWED_HOSTS = ['127.0.0.1', '46.101.246.33', 'bloodhound.me',]
 
 
 # Application definition
