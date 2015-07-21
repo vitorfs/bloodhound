@@ -101,3 +101,6 @@ class PriceHistory(models.Model):
 class Image(models.Model):
     product = models.ForeignKey(Product, related_name='images')
     url = models.URLField(max_length=1000)
+
+    def get_secure_url(self):
+        return self.url.replace('http://', 'https://')

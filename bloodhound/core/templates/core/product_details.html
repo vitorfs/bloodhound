@@ -93,8 +93,8 @@
       <div class="row">
         {% for image in product.images.all %}
           <div class="col-xs-6 col-md-3">
-            <a href="{{ image.url }}" class="thumbnail" target="_blank">
-              <img src="{{ image.url }}" alt="{{ image.product.name }}">
+            <a href="{{ image.get_secure_url }}" class="thumbnail" target="_blank">
+              <img src="{{ image.get_secure_url }}" alt="{{ image.product.name }}">
             </a>
           </div>
         {% endfor %}
