@@ -34,6 +34,11 @@
   <h3 class="product-title">{{ product.name }}</h3>
   <div class="panel panel-default">
     <div class="panel-body">
+      
+      <p>
+        <a href="javascript:history.back();"><span class="glyphicon glyphicon-arrow-left"></span> Return to catalog</a>
+      </p>
+
       <dl class="dl-horizontal">
         <dt>Product Code</dt>
         <dd>{{ product.code }}</dd>
@@ -86,21 +91,21 @@
         </div>
       </div>
 
-      <hr>
+      {% if product.images.exists %}
+        <hr>
 
-      <h4>Pictures</h4>
+        <h4>Pictures</h4>
+        <div class="row">
+          {% for image in product.images.all %}
+            <div class="col-xs-6 col-md-3">
+              <a href="{{ image.get_secure_url }}" class="thumbnail" target="_blank">
+                <img src="{{ image.get_secure_url }}" alt="{{ image.product.name }}">
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
 
-      <div class="row">
-        {% for image in product.images.all %}
-          <div class="col-xs-6 col-md-3">
-            <a href="{{ image.get_secure_url }}" class="thumbnail" target="_blank">
-              <img src="{{ image.get_secure_url }}" alt="{{ image.product.name }}">
-            </a>
-          </div>
-        {% endfor %}
-      </div>
-
-      <a href="javascript:history.back();"><span class="glyphicon glyphicon-arrow-left"></span> Return to catalog</a>
     </div>
   </div>
 {% endblock %}
