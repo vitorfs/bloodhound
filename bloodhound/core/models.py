@@ -27,7 +27,7 @@ class Product(models.Model):
         (NOT_FOUND, u'Not found'),
         )
 
-    name = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=500, null=True, blank=True)
     code = models.CharField(max_length=255, unique=True)
     manufacturer = models.CharField(max_length=255, null=True)
     manufacturer_code = models.CharField(max_length=255, null=True)
