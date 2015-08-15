@@ -3,12 +3,12 @@
 <table class="table" id="products" data-num-pages="{{ products.paginator.num_pages }}">
   <thead>
     <tr>
-      <th><a href="#">Name</a></th>
-      <th class="text-center"><a href="#">Code</a></th>
-      <th class="text-center"><a href="#">Price</a></th>
-      <th class="text-center"><a href="#">Variance</a></th>
-      <th class="text-center"><a href="#">Changes</a></th>
-      <th class="text-center" style="white-space: nowrap;"><a href="#">Last update</a></th>
+      <th><a href="?o=name{% if querystring %}&q={{ querystring }}{% endif %}">Name</a></th>
+      <th class="text-center"><a href="?o=code{% if querystring %}&q={{ querystring }}{% endif %}">Code</a></th>
+      <th class="text-center"><a href="?o=current_price{% if querystring %}&q={{ querystring }}{% endif %}">Price</a></th>
+      <th class="text-center"><a href="?o=price_percentage_variance{% if querystring %}&q={{ querystring }}{% endif %}">Variance</a></th>
+      <th class="text-center"><a href="?o=price_changes{% if querystring %}&q={{ querystring }}{% endif %}">Changes</a></th>
+      <th class="text-center" style="white-space: nowrap;"><a href="?o=visited_at{% if querystring %}&q={{ querystring }}{% endif %}">Last update</a></th>
     </tr>
   </thead>
   <tbody>
